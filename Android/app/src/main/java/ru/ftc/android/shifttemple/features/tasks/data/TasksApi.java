@@ -23,7 +23,7 @@ public interface TasksApi {
     Call<Wrapper<Task>> getTask(@Path("id") String id);
 
     @POST("tasks")
-    Call<Wrapper<Task>> createTask(@Body Task task);
+    Call<Wrapper<List<Task>>> createTask(@Body Task task);
 
     @DELETE("tasks/{id}")
     Call<Wrapper<Success>> deleteTask(@Path("id") String id);

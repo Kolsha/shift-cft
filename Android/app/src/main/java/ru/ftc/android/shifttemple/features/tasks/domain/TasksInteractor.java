@@ -1,5 +1,6 @@
 package ru.ftc.android.shifttemple.features.tasks.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.ftc.android.shifttemple.features.books.domain.model.Success;
@@ -13,7 +14,7 @@ public interface TasksInteractor {
 
     void loadTask(String id, Carry<Task> carry);
 
-    void createTask(Task task, Carry<Task> carry);
+    void createTask(Task task, Carry<ArrayList<Task>> carry);
 
     void deleteTask(String id, Carry<Success> carry);
 
