@@ -33,13 +33,16 @@ final class TasksListPresenter extends MvpPresenter<TasksListView> {
         interactor.loadTasks(new Carry<List<Task>>() {
 
             @Override
-            public void onSuccess (List<Task> result) {
+            public void onSuccess(List<Task> result) {
                 view.showTaskList(result);
                 view.hideProgress();
             }
 
             @Override
             public void onFailure(Throwable throwable) {
+                if (view == null) {
+                    return;
+                }
                 view.hideProgress();
                 view.showError(throwable.getMessage());
 
@@ -95,7 +98,7 @@ final class TasksListPresenter extends MvpPresenter<TasksListView> {
         Task Task = new Task(name, author, String.valueOf(pages));
         interactor.createTask(Task, new Carry<ArrayList<Task>>() {
             @Override
-            public void onSuccess (ArrayList<Task> result) {
+            public void onSuccess(ArrayList<Task> result) {
                 loadTasks();
             }
 

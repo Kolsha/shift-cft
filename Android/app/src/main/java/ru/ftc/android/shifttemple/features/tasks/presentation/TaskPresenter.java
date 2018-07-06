@@ -58,12 +58,20 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
         interactor.loadTask(task_id, new Carry<Task>() {
             @Override
             public void onSuccess(Task result) {
+                if (view==null){
+                    return;
+                }
+
                 view.showTask(result);
                 loadTaskBids();
             }
 
             @Override
             public void onFailure(Throwable throwable) {
+                if (view==null){
+                    return;
+                }
+
                 view.hideProgress();
                 view.showError(throwable.getMessage());
                 if (throwable.getClass() == NotAuthorizedException.class) {
@@ -80,6 +88,7 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     }
 
     void onBidSelected(Bid bid) {
+        //TODO fix!!!
         if(taskIsMine){
             return;
         }
@@ -90,7 +99,7 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
 
 
     void onBidLongClicked(Bid bid) {
-        view.showError("May be added to favorite.. May be no;)"); // TODO: favorite
+//        view.showError("May be added to favorite.. May be no;)"); // TODO: favorite
     }
 
     void setTaskId(final String task_id) {

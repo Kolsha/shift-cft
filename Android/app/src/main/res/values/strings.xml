@@ -10,5 +10,6 @@
     <string name="my_profile">My profile</string>
 
     <string name="create_new_task_text">Create New Task</string>
+    <string name="response_label">Response on task</string>
 
 </resources>

@@ -13,33 +13,60 @@ import java.util.List;
 
 import ru.ftc.android.shifttemple.R;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Bid;
+import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
 
-final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
-
+final class TaskDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private Task task;
     private final List<Bid> bids = new ArrayList<>();
     private final LayoutInflater inflater;
     private final SelectBidListener selectBidListener;
 
-    BidsAdapter(Context context, SelectBidListener selectBidListener) {
+    TaskDetailAdapter(Context context, SelectBidListener selectBidListener) {
         inflater = LayoutInflater.from(context);
         this.selectBidListener = selectBidListener;
     }
 
     @NonNull
     @Override
-    public BidHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View itemView = inflater.inflate(R.layout.bid_item, parent, false);
-        return new BidHolder(itemView, selectBidListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == 0) {
+            View itemView = inflater.inflate(R.layout.task_item, parent, false);
+            return new TaskHolder(itemView);
+        } else {
+            View itemView = inflater.inflate(R.layout.bid_item, parent, false);
+            return new BidHolder(itemView, selectBidListener);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BidHolder holder, int position) {
-        holder.bind(bids.get(position));
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        int viewType = getItemViewType(position);
+
+        if (viewType == 0) {
+            TaskHolder taskHolder = (TaskHolder) holder;
+            taskHolder.bind(task);
+        } else {
+            BidHolder bidHolder = (BidHolder) holder;
+            bidHolder.bind(bids.get(position - 1));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return bids.size();
+        if (task == null) {
+            return bids.size();
+        } else {
+            return 1 + bids.size();
+        }
     }
 
     public void setBids(List<Bid> bidsList) {
@@ -48,8 +75,12 @@ final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
         notifyDataSetChanged();
     }
 
-    class BidHolder extends RecyclerView.ViewHolder {
+    public void setTask(Task task) {
+        this.task = task;
+        notifyDataSetChanged();
+    }
 
+    class BidHolder extends RecyclerView.ViewHolder {
         private final TextView bidUserNameView;
         private final TextView bidTextView;
         private final TextView bidDateView;
@@ -82,9 +113,27 @@ final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
                     return true;
                 }
             });
+        }
+    }
 
+    class TaskHolder extends RecyclerView.ViewHolder {
+        private final TextView taskTitleView;
+        private final TextView taskDescriptionView;
+        private final TextView taskDateView;
+
+        TaskHolder(View view) {
+            super(view);
+
+            taskTitleView = view.findViewById(R.id.task_item_title);
+            taskDescriptionView = view.findViewById(R.id.task_item_description);
+            taskDateView = view.findViewById(R.id.task_item_date);
         }
 
+        void bind(final Task task) {
+            taskTitleView.setText(task.getTitle());
+            taskDescriptionView.setText(task.getDescription());
+            taskDateView.setText(task.getDate());
+        }
     }
 
     interface SelectBidListener {
@@ -92,7 +141,6 @@ final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
         void onBidSelect(Bid bid);
 
         void onBidLongClick(Bid bid);
-
     }
 }
 
