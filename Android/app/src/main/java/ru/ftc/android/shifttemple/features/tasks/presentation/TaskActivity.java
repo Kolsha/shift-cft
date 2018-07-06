@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public final class TaskActivity extends BaseActivity implements TaskView {
     private RecyclerView recyclerView;
     private TaskDetailAdapter adapter;
     private TaskPresenter presenter;
+    private Button responceButton;
 
     private String task_id;
 
@@ -50,6 +53,7 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         if (b != null)
             task_id = b.getString(TASK_ID);
         presenter.setTaskId(task_id);
+
         initView();
 
         //TODO test code
@@ -84,6 +88,17 @@ public final class TaskActivity extends BaseActivity implements TaskView {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        responceButton = findViewById(R.id.responseButton);
+
+        responceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+
+            }
+        });
+
     }
 
     @Override
@@ -128,6 +143,11 @@ public final class TaskActivity extends BaseActivity implements TaskView {
     @Override
     public void showTask(Task task) {
         adapter.setTask(task);
+        if (task.getTaskIsMine()) {
+            responceButton.setVisibility(View.GONE);
+        }else {
+            responceButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

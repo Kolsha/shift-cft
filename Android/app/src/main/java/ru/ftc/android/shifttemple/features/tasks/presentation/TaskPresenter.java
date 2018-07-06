@@ -1,6 +1,7 @@
 package ru.ftc.android.shifttemple.features.tasks.presentation;
 
 import android.util.Pair;
+import android.view.View;
 
 import java.util.List;
 
@@ -15,8 +16,6 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     private final TasksInteractor interactor;
 
     private String task_id;
-
-    private Boolean taskIsMine = true;
 
     TaskPresenter(TasksInteractor interactor) {
         this.interactor = interactor;
@@ -51,24 +50,25 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     }
 
 
-
     private void loadTask() {
         view.showProgress();
 
         interactor.loadTask(task_id, new Carry<Task>() {
             @Override
             public void onSuccess(Task result) {
-                if (view==null){
+                if (view == null) {
                     return;
                 }
 
                 view.showTask(result);
-                loadTaskBids();
+                if (result.getTaskIsMine()) {
+                    loadTaskBids();
+                }
             }
 
             @Override
             public void onFailure(Throwable throwable) {
-                if (view==null){
+                if (view == null) {
                     return;
                 }
 
@@ -89,9 +89,6 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
 
     void onBidSelected(Bid bid) {
         //TODO fix!!!
-        if(taskIsMine){
-            return;
-        }
         view.showConfirmationDialog(bid);
         //view.showError("You choose bid from: " + bid.getUserName());
         //interactor.selectTaskBid
