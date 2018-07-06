@@ -3,7 +3,10 @@ package ru.ftc.android.shifttemple.features.users.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
 import ru.ftc.android.shifttemple.R;
+import ru.ftc.android.shifttemple.features.users.domain.model.User;
 
 public final class UsersLocalDataSourceImpl implements UsersLocalDataSource {
 
@@ -25,5 +28,20 @@ public final class UsersLocalDataSourceImpl implements UsersLocalDataSource {
 
         prefsEditor.putString(key, value);
         prefsEditor.apply();
+    }
+
+    @Override
+    public void putUser(final String key, User user) {
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        putString(key, json);
+    }
+
+    @Override
+    public User getUser(final String key) {
+        Gson gson = new Gson();
+        String json = getString(key);
+        User user = gson.fromJson(json, User.class);
+        return user;
     }
 }

@@ -15,6 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.ftc.android.shifttemple.R;
 import ru.ftc.android.shifttemple.features.users.data.UsersLocalDataSourceImpl;
+import ru.ftc.android.shifttemple.features.users.data.UsersLocalRepository;
 import ru.ftc.android.shifttemple.features.users.data.UsersLocalRepositoryImpl;
 
 /**
@@ -25,22 +26,22 @@ import ru.ftc.android.shifttemple.features.users.data.UsersLocalRepositoryImpl;
 
 public final class RetrofitProvider {
 
-    private static final String BASE_URL = "http://ksware.ru/sandbox/gf-api/";
+    private static final String BASE_URL = "http://172.16.19.55:8080/api/";// http://ksware.ru/sandbox/gf-api/";
 
     private final Retrofit retrofit;
 
 
-    public RetrofitProvider(final Context context) {
-        // TODO: ask it is normal?
-        String token = (new UsersLocalRepositoryImpl(new UsersLocalDataSourceImpl(context))).getUserToken();
+    public RetrofitProvider(final UsersLocalRepository repository) {
+
+
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BASE_URL)
-                .client(createClient(token))
+                .client(createClient(repository))
                 .build();
     }
-    //TODO: move interceptor
-    private OkHttpClient createClient(final String token) {
+
+    private OkHttpClient createClient(final UsersLocalRepository repository) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
@@ -57,8 +58,8 @@ public final class RetrofitProvider {
 
 
                 HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("token", token)
-                        .addEncodedPathSegments("/") // TODO: remove it for production api
+                        .addQueryParameter("token", repository.getUserToken())
+                        //.addEncodedPathSegments("/") // TODO: remove it for production api
                         .build();
 
                 // Request customization: add request headers

@@ -42,7 +42,8 @@ final class TasksListPresenter extends MvpPresenter<TasksListView> {
             public void onFailure(Throwable throwable) {
                 view.hideProgress();
                 view.showError(throwable.getMessage());
-                if(throwable.getClass() == NotAuthorizedException.class){
+
+                if (throwable instanceof NotAuthorizedException) {
                     view.showLoginForm();
                 }
 

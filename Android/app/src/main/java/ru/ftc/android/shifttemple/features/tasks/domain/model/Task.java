@@ -4,10 +4,13 @@ public final class Task {
     private String task_id;
     private String user_id;
     private String title;
+    private String short_description;
     private String description;
     private String date;
     private String status;
     private long id_selected_bid;
+
+    private Boolean task_is_mine;
 
     public Task(String user_id, String title, String description) {
         this.user_id = user_id;
@@ -27,9 +30,16 @@ public final class Task {
         return user_id;
     }
 
+
+    public String getShortDescription() {
+        return short_description;
+    }
+
     public String getDescription() {
         return description;
     }
+
+   // public String
 
     public String getDate() {
         return date;
@@ -41,5 +51,13 @@ public final class Task {
 
     public long getIdSelectedBid() {
         return id_selected_bid;
+    }
+
+    public Boolean getTaskIsMine() {
+        return task_is_mine;
+    }
+
+    public void setTaskIsMine(Boolean task_is_mine) {
+        this.task_is_mine = task_is_mine;
     }
 }

@@ -63,7 +63,9 @@ public final class TasksActivity extends BaseActivity implements TasksListView {
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onCreateTaskClicked();
+                Intent intent = new Intent(TasksActivity.this, NewTaskActivity.class);
+                startActivity(intent);
+                //presenter.onCreateTaskClicked();
             }
         });
 
@@ -130,18 +132,11 @@ public final class TasksActivity extends BaseActivity implements TasksListView {
     @Override
     public void showLoginForm() {
         Intent intent = new Intent(TasksActivity.this, UserLoginLoginActivity.class);
-
         startActivity(intent);
     }
 
     @Override
     public void showTask(Task task) {
-        Intent intent = new Intent(TasksActivity.this, TaskActivity.class);
-
-        Bundle b = new Bundle();
-        b.putString("task_id", task.getId());
-        intent.putExtras(b);
-
-        startActivity(intent);
+        TaskActivity.start(this, task.getId());
     }
 }

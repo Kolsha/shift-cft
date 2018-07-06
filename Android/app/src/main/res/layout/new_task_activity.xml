@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:fillViewport="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="50dp"
+    android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/new_task_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_new_task_text"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <ProgressBar
+        android:id="@+id/new_task_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+
+    <EditText
+        android:id="@+id/new_task_input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:inputType="text"
+        android:textColor="#000000" />
+
+
+    <EditText
+        android:id="@+id/new_task_input_description"
+        android:layout_width="match_parent"
+        android:layout_height="244dp"
+        android:hint="Description"
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        android:textColor="#000000" />
+
+
+    <Button
+        android:id="@+id/new_task_create_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorAccent"
+        android:text="Publish"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

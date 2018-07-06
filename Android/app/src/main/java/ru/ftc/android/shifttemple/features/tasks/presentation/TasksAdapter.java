@@ -65,7 +65,7 @@ final class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> {
 
         void bind(final Task task) {
             taskTitleView.setText(task.getTitle());
-            taskDescriptionView.setText(task.getDescription()); // TODO: constant define .substring(0, 100)
+            taskDescriptionView.setText(task.getShortDescription()); // TODO: constant define .substring(0, 100)
             taskDateView.setText(task.getDate());
 
             itemView.setOnClickListener(new View.OnClickListener() {

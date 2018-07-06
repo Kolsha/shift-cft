@@ -39,4 +39,11 @@ final class PresenterFactory {
     static TaskPresenter createTaskPresenter(Context context) {
         return new TaskPresenter(createTasksInteractor(context));
     }
+
+
+    static NewTaskPresenter createNewTaskPresenter(Context context) {
+        return new NewTaskPresenter(createTasksInteractor(context));
+    }
+
+
 }

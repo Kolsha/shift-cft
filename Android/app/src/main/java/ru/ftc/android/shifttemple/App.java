@@ -3,6 +3,7 @@ package ru.ftc.android.shifttemple;
 import android.app.Application;
 import android.content.Context;
 
+import ru.ftc.android.shifttemple.features.users.data.UserLocalRepositoryFactory;
 import ru.ftc.android.shifttemple.network.RetrofitProvider;
 
 /**
@@ -26,6 +27,7 @@ public final class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        retrofitProvider = new RetrofitProvider(getApplicationContext());
+
+        retrofitProvider = new RetrofitProvider(UserLocalRepositoryFactory.create(this));
     }
 }

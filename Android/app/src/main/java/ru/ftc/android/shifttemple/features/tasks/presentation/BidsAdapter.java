@@ -28,7 +28,7 @@ final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
     @NonNull
     @Override
     public BidHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View itemView = inflater.inflate(R.layout.task_item, parent, false);
+        final View itemView = inflater.inflate(R.layout.bid_item, parent, false);
         return new BidHolder(itemView, selectBidListener);
     }
 
@@ -50,23 +50,23 @@ final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
 
     class BidHolder extends RecyclerView.ViewHolder {
 
-        private final TextView taskTitleView;
-        private final TextView taskDescriptionView;
-        private final TextView taskDateView;
+        private final TextView bidUserNameView;
+        private final TextView bidTextView;
+        private final TextView bidDateView;
         private final SelectBidListener selectBidListener;
 
         BidHolder(View view, SelectBidListener selectBidListener) {
             super(view);
             this.selectBidListener = selectBidListener;
-            taskTitleView = view.findViewById(R.id.task_item_title);
-            taskDescriptionView = view.findViewById(R.id.task_item_description);
-            taskDateView = view.findViewById(R.id.task_item_date);
+            bidUserNameView = view.findViewById(R.id.bid_item_username);
+            bidTextView = view.findViewById(R.id.bid_item_text);
+            bidDateView = view.findViewById(R.id.bid_item_date);
         }
 
         void bind(final Bid bid) {
-            //taskTitleView.setText(task.getTitle());
-            //taskDescriptionView.setText(task.getDescription()); // TODO: constant define .substring(0, 100)
-            //taskDateView.setText(task.getDate());
+            bidUserNameView.setText(bid.getUserName());
+            bidTextView.setText(bid.getText());
+            bidDateView.setText(bid.getDate());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

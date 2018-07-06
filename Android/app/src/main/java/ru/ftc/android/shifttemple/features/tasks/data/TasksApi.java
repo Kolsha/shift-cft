@@ -30,11 +30,11 @@ public interface TasksApi {
 
 
 
-    @GET("/tasks/{id}/bids")
+    @GET("tasks/{id}/bids")
     Call<Wrapper<List<Bid>>> getTaskBids(@Path("id") String id);
 
 
-    @GET("/tasks/{id}/bids")
+    @POST("tasks/{id}/bids")
     Call<Wrapper<Bid>> createTaskBid(@Path("id") String id, @Body Bid bid);
 
 }

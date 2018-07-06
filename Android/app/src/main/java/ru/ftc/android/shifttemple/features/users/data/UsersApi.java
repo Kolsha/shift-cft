@@ -18,8 +18,6 @@ import ru.ftc.android.shifttemple.features.users.domain.model.User;
 
 public interface UsersApi {
 
-    //TODO: why POST is skipped? Because my server dno
-
     @GET("users/{id}")
     Call<Wrapper<User>> getUser(@Path("id") String id);
 
