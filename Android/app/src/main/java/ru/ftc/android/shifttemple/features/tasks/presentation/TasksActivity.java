@@ -7,7 +7,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import ru.ftc.android.shifttemple.R;
 import ru.ftc.android.shifttemple.features.BaseActivity;
 import ru.ftc.android.shifttemple.features.MvpPresenter;
 import ru.ftc.android.shifttemple.features.MvpView;
+import ru.ftc.android.shifttemple.features.profile.ProfileActivity;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
 import ru.ftc.android.shifttemple.features.users.presentation.UserLoginLoginActivity;
 
@@ -32,8 +35,21 @@ public final class TasksActivity extends BaseActivity implements TasksListView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
         setContentView(R.layout.tasks_activity);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View profileButtonView = mInflater.inflate(R.layout.view_actionbar_profile, null);
+        ImageView profileImage = profileButtonView.findViewById(R.id.image);//через пикассо фигачим картинку
+        getSupportActionBar().setCustomView(profileButtonView);
+
+        profileButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TasksActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         initView();
     }
@@ -69,7 +85,6 @@ public final class TasksActivity extends BaseActivity implements TasksListView {
             public void onTaskLongClick(Task task) {
 
                 presenter.onTaskLongClicked(task);
-
 
 
             }

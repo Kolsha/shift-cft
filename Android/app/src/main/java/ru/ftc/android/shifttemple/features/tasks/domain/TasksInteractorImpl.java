@@ -1,5 +1,6 @@
 package ru.ftc.android.shifttemple.features.tasks.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.ftc.android.shifttemple.exception.NotAuthorizedException;
@@ -46,7 +47,7 @@ public final class TasksInteractorImpl implements TasksInteractor {
     }
 
     @Override
-    public void createTask(Task task, Carry<Task> carry) {
+    public void createTask(Task task, Carry<ArrayList<Task>> carry) {
         repositoryUsersLocal.setUserToken("");
         if(!checkUserToken(carry)){
             return;
