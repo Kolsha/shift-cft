@@ -27,7 +27,7 @@ public final class TasksDataSourceImpl implements TasksDataSource {
     }
 
     @Override
-    public void createTask(Task task, Carry<ArrayList<Task>> carry) {
+    public void createTask(Task task, Carry<Task> carry) {
         tasksApi.createTask(task).enqueue(new DefaultCallback(carry));
     }
 

@@ -96,9 +96,9 @@ final class TasksListPresenter extends MvpPresenter<TasksListView> {
         int pages = 7 * id;
 
         Task Task = new Task(name, author, String.valueOf(pages));
-        interactor.createTask(Task, new Carry<ArrayList<Task>>() {
+        interactor.createTask(Task, new Carry <Task> () {
             @Override
-            public void onSuccess(ArrayList<Task> result) {
+            public void onSuccess(Task result) {
                 loadTasks();
             }
 

@@ -37,20 +37,6 @@ public final class TasksActivity extends BaseActivity implements TasksListView {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         setContentView(R.layout.tasks_activity);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        View profileButtonView = mInflater.inflate(R.layout.view_actionbar_profile, null);
-        ImageView profileImage = profileButtonView.findViewById(R.id.image);//через пикассо фигачим картинку
-        getSupportActionBar().setCustomView(profileButtonView);
-
-        profileButtonView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TasksActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         initView();
     }
 

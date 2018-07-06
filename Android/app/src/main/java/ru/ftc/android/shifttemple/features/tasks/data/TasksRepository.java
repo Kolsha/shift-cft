@@ -15,7 +15,7 @@ public interface TasksRepository {
 
     void loadTask(String id, Carry<Task> carry);
 
-    void createTask(Task task, Carry<ArrayList<Task>> carry);
+    void createTask(Task task, Carry<Task> carry);
 
     void deleteTask(String id, Carry<Success> carry);
 

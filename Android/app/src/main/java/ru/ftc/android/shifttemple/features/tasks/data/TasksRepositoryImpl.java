@@ -27,7 +27,7 @@ public final class TasksRepositoryImpl implements TasksRepository {
     }
 
     @Override
-    public void createTask(Task task, Carry<ArrayList<Task>> carry) {
+    public void createTask(Task task, Carry<Task> carry) {
         dataSource.createTask(task, carry);
     }
 
