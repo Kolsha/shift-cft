@@ -1,18 +1,18 @@
 package ru.ftc.android.shifttemple.features.tasks.presentation;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.ftc.android.shifttemple.R;
@@ -27,18 +27,10 @@ public final class TaskActivity extends BaseActivity implements TaskView {
 
     private static final String TASK_ID = "taskId";
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView recyclerView;
-    //private FloatingActionButton createTaskButton;
-    private BidsAdapter adapter;
-
-    private TextView titleView;
-
-    private TextView descriptionView;
-
-    private  TextView dateView;
-
+    private TaskDetailAdapter adapter;
     private TaskPresenter presenter;
+    private Button responceButton;
 
     private String task_id;
 
@@ -61,37 +53,28 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         if (b != null)
             task_id = b.getString(TASK_ID);
         presenter.setTaskId(task_id);
+
         initView();
+
+        //TODO test code
+//        Task task = new Task("asda", "Titles dfd sf sdf sd fs", "asd d sa dsa j fghfjk dgh jkfdhgh jkfdhjkg fhdkjg hfdkjg hfdkjjg hfdjkg hfjkghdfjk h gjkfdhgjkfgh kjfdhgjk fdhgjk hdgjkdf hdsa ");
+//        adapter.setTask(task);
+//
+//        ArrayList<Bid> bids = new ArrayList<>(10);
+//
+//        for(int i = 0; i < 10; i++) {
+//            bids.add(new Bid("qweq", "asd sadas das dssdf ds fdsa"));
+//        }
+//
+//        adapter.setBids(bids);
+        //TODO test code
     }
 
 
     private void initView() {
-        //showError(task_id);
-        mSwipeRefreshLayout = findViewById(R.id.bids_swipeRefreshLayout);
-        recyclerView = findViewById(R.id.bids_recycle_view);
-        //createTaskButton = findViewById(R.id.create_task_button);
+        recyclerView = findViewById(R.id.dataView);
 
-        /*createTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onCreateTaskClicked();
-            }
-        });
-        */
-
-        titleView = findViewById(R.id.task_title);
-        descriptionView = findViewById(R.id.task_description);
-        dateView = findViewById(R.id.task_date);
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Refresh items
-                presenter.onRefreshTask();
-            }
-        });
-
-        adapter = new BidsAdapter(this, new BidsAdapter.SelectBidListener() {
+        adapter = new TaskDetailAdapter(this, new TaskDetailAdapter.SelectBidListener() {
             @Override
             public void onBidSelect(Bid bid) {
                 presenter.onBidSelected(bid);
@@ -106,18 +89,28 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        responceButton = findViewById(R.id.responseButton);
+
+        responceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+
+            }
+        });
+
     }
 
     @Override
     public void showProgress() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        recyclerView.setVisibility(View.GONE);
+//        mSwipeRefreshLayout.setRefreshing(true);
+//        recyclerView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgress() {
-        mSwipeRefreshLayout.setRefreshing(false);
-        recyclerView.setVisibility(View.VISIBLE);
+//        mSwipeRefreshLayout.setRefreshing(false);
+//        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -149,16 +142,18 @@ public final class TaskActivity extends BaseActivity implements TaskView {
 
     @Override
     public void showTask(Task task) {
-        //TODO: show task
-        titleView.setText(task.getTitle());
-        descriptionView.setText(task.getDescription());
-        dateView.setText(task.getDate());
+        adapter.setTask(task);
+        if (task.getTaskIsMine()) {
+            responceButton.setVisibility(View.GONE);
+        }else {
+            responceButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     //TODO: ask
     public void showConfirmationDialog(final Bid bid) {
-        AlertDialog.Builder builder;
+        /*AlertDialog.Builder builder;
 
         builder = new AlertDialog.Builder(this);
 
@@ -171,6 +166,6 @@ public final class TaskActivity extends BaseActivity implements TaskView {
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .show();*/
     }
 }

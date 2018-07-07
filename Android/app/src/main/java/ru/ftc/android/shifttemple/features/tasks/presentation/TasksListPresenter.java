@@ -3,6 +3,7 @@ package ru.ftc.android.shifttemple.features.tasks.presentation;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,6 +40,9 @@ final class TasksListPresenter extends MvpPresenter<TasksListView> {
 
             @Override
             public void onFailure(Throwable throwable) {
+                if (view == null) {
+                    return;
+                }
                 view.hideProgress();
                 view.showError(throwable.getMessage());
 
@@ -92,7 +96,7 @@ final class TasksListPresenter extends MvpPresenter<TasksListView> {
         int pages = 7 * id;
 
         Task Task = new Task(name, author, String.valueOf(pages));
-        interactor.createTask(Task, new Carry<Task>() {
+        interactor.createTask(Task, new Carry <Task> () {
             @Override
             public void onSuccess(Task result) {
                 loadTasks();

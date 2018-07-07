@@ -1,6 +1,7 @@
 package ru.ftc.android.shifttemple.features.tasks.presentation;
 
 import android.util.Pair;
+import android.view.View;
 
 import java.util.List;
 
@@ -15,8 +16,6 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     private final TasksInteractor interactor;
 
     private String task_id;
-
-    private Boolean taskIsMine = true;
 
     TaskPresenter(TasksInteractor interactor) {
         this.interactor = interactor;
@@ -51,19 +50,28 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     }
 
 
-
     private void loadTask() {
         view.showProgress();
 
         interactor.loadTask(task_id, new Carry<Task>() {
             @Override
             public void onSuccess(Task result) {
+                if (view == null) {
+                    return;
+                }
+
                 view.showTask(result);
-                loadTaskBids();
+                if (result.getTaskIsMine()) {
+                    loadTaskBids();
+                }
             }
 
             @Override
             public void onFailure(Throwable throwable) {
+                if (view == null) {
+                    return;
+                }
+
                 view.hideProgress();
                 view.showError(throwable.getMessage());
                 if (throwable.getClass() == NotAuthorizedException.class) {
@@ -80,9 +88,7 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     }
 
     void onBidSelected(Bid bid) {
-        if(taskIsMine){
-            return;
-        }
+        //TODO fix!!!
         view.showConfirmationDialog(bid);
         //view.showError("You choose bid from: " + bid.getUserName());
         //interactor.selectTaskBid
@@ -90,7 +96,7 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
 
 
     void onBidLongClicked(Bid bid) {
-        view.showError("May be added to favorite.. May be no;)"); // TODO: favorite
+//        view.showError("May be added to favorite.. May be no;)"); // TODO: favorite
     }
 
     void setTaskId(final String task_id) {

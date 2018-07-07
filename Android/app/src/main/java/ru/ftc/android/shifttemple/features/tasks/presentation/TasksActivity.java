@@ -18,6 +18,7 @@ import ru.ftc.android.shifttemple.R;
 import ru.ftc.android.shifttemple.features.BaseActivity;
 import ru.ftc.android.shifttemple.features.MvpPresenter;
 import ru.ftc.android.shifttemple.features.MvpView;
+import ru.ftc.android.shifttemple.features.profile.ProfileActivity;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
 import ru.ftc.android.shifttemple.features.users.presentation.UserLoginLoginActivity;
 
@@ -36,7 +37,6 @@ public final class TasksActivity extends BaseActivity implements TasksListView {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         setContentView(R.layout.tasks_activity);
-
         initView();
     }
 
