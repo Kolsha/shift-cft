@@ -17,9 +17,6 @@
     <string name="respond">Respond</string>
     <string name="respond_toast">Thank you for responding!</string>
 
-
-
-
-
+    <string name="user_screen_title">User profile</string>
 
 </resources>

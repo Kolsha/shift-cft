@@ -24,6 +24,10 @@
             android:label="@string/my_profile" />
         <activity android:name=".features.tasks.presentation.TaskActivity" />
         <activity android:name=".features.tasks.presentation.NewTaskActivity" />
+        <activity android:name=".features.users.presentation.UserActivity"
+            android:label="@string/user_screen_title"/>
+
     </application>
+
 
 </manifest>

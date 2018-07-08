@@ -25,6 +25,7 @@ import ru.ftc.android.shifttemple.features.MvpPresenter;
 import ru.ftc.android.shifttemple.features.MvpView;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Bid;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
+import ru.ftc.android.shifttemple.features.users.presentation.UserActivity;
 import ru.ftc.android.shifttemple.features.users.presentation.UserLoginLoginActivity;
 
 public final class TaskActivity extends BaseActivity implements TaskView {
@@ -81,7 +82,7 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         adapter = new TaskDetailAdapter(this, new TaskDetailAdapter.SelectBidListener() {
             @Override
             public void onBidSelect(Bid bid) {
-                presenter.onBidSelected(bid);
+                UserActivity.start(TaskActivity.this, bid.getId());
             }
 
             @Override
@@ -209,4 +210,5 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         Toast.makeText(TaskActivity.this, R.string.respond_toast,
                 Toast.LENGTH_LONG).show();
     }
+
 }

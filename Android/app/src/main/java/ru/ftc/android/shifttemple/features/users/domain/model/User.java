@@ -6,6 +6,11 @@ public final class User {
     private String description;
     private String date;
     private String status;
+    private String phone;
+    private String name;
+    private String surname;
+
+
     private long id_selected_bid;
 
     public User(String user_id, String title, String description) {
@@ -41,4 +46,18 @@ public final class User {
     public long getIdSelectedBid() {
         return id_selected_bid;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+
 }

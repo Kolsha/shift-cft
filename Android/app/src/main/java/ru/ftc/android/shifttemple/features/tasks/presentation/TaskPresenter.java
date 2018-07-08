@@ -24,7 +24,6 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
     @Override
     protected void onViewReady() {
         loadTask();
-        view.showError("Task id: " + task_id);
     }
 
     private void loadTaskBids() {
@@ -84,12 +83,6 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
 
     }
 
-    void onBidSelected(Bid bid) {
-        //TODO fix!!!
-        view.showConfirmationDialog(bid);
-        //view.showError("You choose bid from: " + bid.getUserName());
-        //interactor.selectTaskBid
-    }
 
     void sendBid(String taskId, String comment) {
         Bid bid = new Bid(taskId, comment);

@@ -15,6 +15,7 @@ import ru.ftc.android.shifttemple.features.users.data.UsersLocalDataSource;
 import ru.ftc.android.shifttemple.features.users.data.UsersLocalDataSourceImpl;
 import ru.ftc.android.shifttemple.features.users.data.UsersLocalRepository;
 import ru.ftc.android.shifttemple.features.users.data.UsersLocalRepositoryImpl;
+import ru.ftc.android.shifttemple.features.users.presentation.UserPresenter;
 
 final class PresenterFactory {
 
@@ -44,6 +45,8 @@ final class PresenterFactory {
     static NewTaskPresenter createNewTaskPresenter(Context context) {
         return new NewTaskPresenter(createTasksInteractor(context));
     }
+
+
 
 
 }
