@@ -1,14 +1,18 @@
 package ru.ftc.android.shifttemple.features.tasks.presentation;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,7 +98,35 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         responceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                AlertDialog.Builder builder = new AlertDialog.Builder(TaskActivity.this);
+
+                final EditText addCommentaryView = new EditText(TaskActivity.this);
+
+
+                builder.setTitle(R.string.response_label)
+                        .setMessage(R.string.add_comment)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setCancelable(true)
+                        .setView(addCommentaryView)
+                        .setNegativeButton(R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setPositiveButton(R.string.respond,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        presenter.sendBid(task_id, addCommentaryView.getText().toString());
+
+
+                                        dialog.cancel();
+                                    }
+                                });
+
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
 
             }
         });
@@ -145,10 +177,13 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         adapter.setTask(task);
         if (task.getTaskIsMine()) {
             responceButton.setVisibility(View.GONE);
-        }else {
+        } else {
             responceButton.setVisibility(View.VISIBLE);
         }
     }
+
+
+
 
     @Override
     //TODO: ask
@@ -167,5 +202,11 @@ public final class TaskActivity extends BaseActivity implements TaskView {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();*/
+    }
+
+    @Override
+    public void showResponseSuccess() {
+        Toast.makeText(TaskActivity.this, R.string.respond_toast,
+                Toast.LENGTH_LONG).show();
     }
 }

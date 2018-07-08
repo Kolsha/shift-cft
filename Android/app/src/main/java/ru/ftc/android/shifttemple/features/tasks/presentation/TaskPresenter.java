@@ -43,12 +43,9 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
                 if (throwable.getClass() == NotAuthorizedException.class) {
                     view.showLoginForm();
                 }
-
             }
-
         });
     }
-
 
     private void loadTask() {
         view.showProgress();
@@ -92,6 +89,30 @@ final class TaskPresenter extends MvpPresenter<TaskView> {
         view.showConfirmationDialog(bid);
         //view.showError("You choose bid from: " + bid.getUserName());
         //interactor.selectTaskBid
+    }
+
+    void sendBid(String taskId, String comment) {
+        Bid bid = new Bid(taskId, comment);
+
+        interactor.createTaskBid(taskId, bid, new Carry<Bid>() {
+            @Override
+            public void onSuccess(Bid result) {
+                if (view == null) {
+                    return;
+                }
+
+                view.showResponseSuccess();
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                if (view == null) {
+                    return;
+                }
+
+                view.showError(throwable.getMessage());
+            }
+        });
     }
 
 

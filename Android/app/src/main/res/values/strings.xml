@@ -12,6 +12,13 @@
     <string name="create_new_task_text">Create New Task</string>
 
     <string name="response_label">Response on task</string>
+    <string name="add_comment">Add a comment</string>
+    <string name="cancel">Cancel</string>
+    <string name="respond">Respond</string>
+    <string name="respond_toast">Thank you for responding!</string>
+
+
+
 
 
 

@@ -23,4 +23,5 @@ interface TaskView extends MvpView {
 
     void showConfirmationDialog(Bid bid);
 
+    void showResponseSuccess();
 }
