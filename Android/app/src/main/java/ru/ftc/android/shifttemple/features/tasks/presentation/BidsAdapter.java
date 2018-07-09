@@ -1,11 +1,13 @@
 package ru.ftc.android.shifttemple.features.tasks.presentation;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,58 +17,39 @@ import ru.ftc.android.shifttemple.R;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Bid;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
 
-final class TaskDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Task task;
+/*
+final class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidHolder> {
+
     private final List<Bid> bids = new ArrayList<>();
     private final LayoutInflater inflater;
     private final SelectBidListener selectBidListener;
+    //TODO: ask
+    private Task task;
 
-    TaskDetailAdapter(Context context, SelectBidListener selectBidListener) {
+    BidsAdapter(Context context, SelectBidListener selectBidListener) {
         inflater = LayoutInflater.from(context);
         this.selectBidListener = selectBidListener;
     }
 
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == 0) {
-            View itemView = inflater.inflate(R.layout.task_item, parent, false);
-            return new TaskHolder(itemView);
-        } else {
-            View itemView = inflater.inflate(R.layout.bid_item, parent, false);
-            return new BidHolder(itemView, selectBidListener);
-        }
+    public BidHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View itemView = inflater.inflate(R.layout.bid_item, parent, false);
+        return new BidHolder(itemView, selectBidListener);
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        int viewType = getItemViewType(position);
-
-        if (viewType == 0) {
-            TaskHolder taskHolder = (TaskHolder) holder;
-            taskHolder.bind(task);
-        } else {
-            BidHolder bidHolder = (BidHolder) holder;
-            bidHolder.bind(bids.get(position - 1), task);
-        }
+    public void onBindViewHolder(@NonNull BidHolder holder, int position) {
+        holder.bind(bids.get(position), task);
     }
 
     @Override
     public int getItemCount() {
-        if (task == null) {
-            return bids.size();
-        } else {
-            return 1 + bids.size();
-        }
+        return bids.size();
     }
 
     public void setBids(List<Bid> bidsList) {
@@ -75,15 +58,12 @@ final class TaskDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
-    public void setTask(Task task) {
-        this.task = task;
-        notifyDataSetChanged();
-    }
-
     class BidHolder extends RecyclerView.ViewHolder {
+
         private final TextView bidUserNameView;
         private final TextView bidTextView;
         private final TextView bidDateView;
+        private final Button bidFinishTask;
         private final SelectBidListener selectBidListener;
 
         BidHolder(View view, SelectBidListener selectBidListener) {
@@ -92,13 +72,36 @@ final class TaskDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             bidUserNameView = view.findViewById(R.id.bid_item_username);
             bidTextView = view.findViewById(R.id.bid_item_text);
             bidDateView = view.findViewById(R.id.bid_item_date);
+
+            bidFinishTask = view.findViewById(R.id.bid_item_finish_task);
         }
 
         void bind(final Bid bid, final Task task) {
+
             bidUserNameView.setText(bid.getUserName());
             bidTextView.setText(bid.getText());
             bidDateView.setText(bid.getDate());
 
+            bidFinishTask.setVisibility(View.GONE);
+
+            ((View)bidUserNameView.getParent()).setBackgroundColor(Color.WHITE);
+
+            if (task != null // TODO: && task.getTaskIsMine()
+                             && task.getIdSelectedBid() != null
+                             && task.getIdSelectedBid().equals(bid.getId())) {
+
+                ((View)bidUserNameView.getParent()).setBackgroundColor(Color.GREEN);
+
+
+                bidFinishTask.setVisibility(View.VISIBLE);
+
+                bidFinishTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectBidListener.onBidFinishTaskClicked(bid);
+                    }
+                });
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,27 +117,9 @@ final class TaskDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     return true;
                 }
             });
-        }
-    }
 
-    class TaskHolder extends RecyclerView.ViewHolder {
-        private final TextView taskTitleView;
-        private final TextView taskDescriptionView;
-        private final TextView taskDateView;
-
-        TaskHolder(View view) {
-            super(view);
-
-            taskTitleView = view.findViewById(R.id.task_item_title);
-            taskDescriptionView = view.findViewById(R.id.task_item_description);
-            taskDateView = view.findViewById(R.id.task_item_date);
         }
 
-        void bind(final Task task) {
-            taskTitleView.setText(task.getTitle());
-            taskDescriptionView.setText(task.getDescription());
-            taskDateView.setText(task.getDate());
-        }
     }
 
     interface SelectBidListener {
@@ -147,4 +132,4 @@ final class TaskDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 }
-
+*/

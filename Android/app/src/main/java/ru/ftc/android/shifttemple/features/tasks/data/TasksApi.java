@@ -12,6 +12,7 @@ import ru.ftc.android.shifttemple.features.books.domain.model.Success;
 import ru.ftc.android.shifttemple.features.books.domain.model.Wrapper;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Bid;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
+import ru.ftc.android.shifttemple.features.users.domain.model.User;
 
 public interface TasksApi {
 
@@ -36,5 +37,15 @@ public interface TasksApi {
 
     @POST("tasks/{id}/bids")
     Call<Wrapper<Bid>> createTaskBid(@Path("id") String id, @Body Bid bid);
+
+
+    //TODO: ask or move bid to independent package
+
+    @POST("tasks/{id}/bids/choose")
+    Call<Wrapper<Success>> chooseTaskBid(@Path("id") String id, @Body Bid bid);
+
+
+    @POST("tasks/{id}/finish")
+    Call<Wrapper<Success>> finishTask(@Path("id") String id);
 
 }

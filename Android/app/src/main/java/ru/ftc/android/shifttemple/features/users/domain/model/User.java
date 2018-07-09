@@ -2,62 +2,46 @@ package ru.ftc.android.shifttemple.features.users.domain.model;
 
 public final class User {
     private String user_id;
-    private String title;
-    private String description;
-    private String date;
-    private String status;
-    private String phone;
     private String name;
-    private String surname;
+    private String phone;
+    private String vk_link;
+    private String tg_link;
+    private String email;
+    private long karma;
 
-
-    private long id_selected_bid;
-
-    public User(String user_id, String title, String description) {
+    public User(String user_id, String name, String phone) {
         this.user_id = user_id;
-        this.title = title;
-        this.description = description;
+        this.name = name;
+        this.phone = phone;
+
     }
 
     public String getId() {
         return user_id;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public String getUserId() {
-        return user_id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public long getIdSelectedBid() {
-        return id_selected_bid;
+    public String getName() {
+        return name;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public String getName() {
-        return name;
+    public String getVkLink() {
+        return vk_link;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getTgLink() {
+        return tg_link;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public long getKarma() {
+        return karma;
+    }
 }

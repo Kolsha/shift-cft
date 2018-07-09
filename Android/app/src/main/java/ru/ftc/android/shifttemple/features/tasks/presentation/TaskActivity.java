@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,7 @@ import ru.ftc.android.shifttemple.features.MvpPresenter;
 import ru.ftc.android.shifttemple.features.MvpView;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Bid;
 import ru.ftc.android.shifttemple.features.tasks.domain.model.Task;
-import ru.ftc.android.shifttemple.features.users.presentation.UserActivity;
+
 import ru.ftc.android.shifttemple.features.users.presentation.UserLoginLoginActivity;
 
 public final class TaskActivity extends BaseActivity implements TaskView {
@@ -36,14 +37,14 @@ public final class TaskActivity extends BaseActivity implements TaskView {
     private TaskDetailAdapter adapter;
     private TaskPresenter presenter;
     private Button responceButton;
-
+    private Button closeTaskButton;
     private String task_id;
 
-    public static void start(Context context, final String task_id) {
+    public static void start(Context context, final Task task) {
         Intent intent = new Intent(context, TaskActivity.class);
 
         Bundle b = new Bundle();
-        b.putString(TASK_ID, task_id);
+        b.putString(TASK_ID, task.getId());
         intent.putExtras(b);
 
         context.startActivity(intent);
@@ -82,7 +83,12 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         adapter = new TaskDetailAdapter(this, new TaskDetailAdapter.SelectBidListener() {
             @Override
             public void onBidSelect(Bid bid) {
-                UserActivity.start(TaskActivity.this, bid.getId());
+                presenter.onBidSelected(bid);
+            }
+
+            @Override
+            public void onBidFinishTaskClicked(Bid bid) {
+                ///TODO: presenter //
             }
 
             @Override
@@ -99,35 +105,7 @@ public final class TaskActivity extends BaseActivity implements TaskView {
         responceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(TaskActivity.this);
-
-                final EditText addCommentaryView = new EditText(TaskActivity.this);
-
-
-                builder.setTitle(R.string.response_label)
-                        .setMessage(R.string.add_comment)
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setCancelable(true)
-                        .setView(addCommentaryView)
-                        .setNegativeButton(R.string.cancel,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                        .setPositiveButton(R.string.respond,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        presenter.sendBid(task_id, addCommentaryView.getText().toString());
-
-
-                                        dialog.cancel();
-                                    }
-                                });
-
-                AlertDialog dialog = builder.create();
-
-                dialog.show();
+                presenter.onCreateBidClicked();
 
             }
         });
@@ -184,31 +162,55 @@ public final class TaskActivity extends BaseActivity implements TaskView {
     }
 
 
+    @Override
+    public void showInputBidTextDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+
+        builder.setTitle("Create Bid Answer")
+                .setView(input)
+                .setMessage("Input your answer please:")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.onBidTextEntered(input.getText().toString());
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 
     @Override
-    //TODO: ask
-    public void showConfirmationDialog(final Bid bid) {
-        /*AlertDialog.Builder builder;
+    public void changeCloseButtonVisibility(boolean hide) {
+        if (hide) {
+            closeTaskButton.setVisibility(View.GONE);
+        } else {
+            closeTaskButton.setVisibility(View.VISIBLE);
+        }
+    }
 
-        builder = new AlertDialog.Builder(this);
+    @Override
+    public void showConfirmationDialog(final Bid bid) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Choose bid")
                 .setMessage("Are you sure you want to choose this bid?\n" + bid.getText())
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.onBidSelected(bid);
+                        presenter.onBidChoosed(bid);
                     }
                 })
-                .setNegativeButton(android.R.string.no, null)
+                .setNegativeButton(android.R.string.no, null)//TODO use other string res
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();*/
+                .show();
     }
+
 
     @Override
     public void showResponseSuccess() {
-        Toast.makeText(TaskActivity.this, R.string.respond_toast,
-                Toast.LENGTH_LONG).show();
+        showError(getString(R.string.respond_toast));
     }
-
 }

@@ -8,6 +8,27 @@ public final class Bid {
     private String text;
     private String date;
 
+    private String phone;
+    private String vk_link;
+    private String tg_link;
+    private String email;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getVkLink() {
+        return vk_link;
+    }
+
+    public String getTgLink() {
+        return tg_link;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public Bid(String task_id, String text) {
         this.task_id = task_id;
         this.text = text;

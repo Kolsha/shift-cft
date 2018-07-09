@@ -1,6 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+<LinearLayout
+    android:id="@+id/activity_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/hello_text"
+        android:text="@string/hello_text"
+
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_normal"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/karma_text"
+        android:text="@string/karma_text"
+
+
+        android:layout_marginLeft="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/hello_text"
+        android:layout_marginTop="@dimen/space_normal"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/phone_number_text"
+        android:text="@string/phone_number_text"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/karma_text"
+        android:layout_marginTop="@dimen/space_normal"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/your_tasks_text"
+        android:text="@string/your_tasks"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/phone_number_text"
+        android:layout_marginTop="@dimen/space_normal"
+
+        />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/author_tasks_list"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:padding="@dimen/space_normal"
+        android:layout_marginRight="@dimen/space_normal"
+        >
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/profile_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/space_normal"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_input_add" />
+</FrameLayout>

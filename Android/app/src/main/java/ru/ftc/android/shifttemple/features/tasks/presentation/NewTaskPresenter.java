@@ -12,8 +12,8 @@ import ru.ftc.android.shifttemple.network.Carry;
 final class NewTaskPresenter extends MvpPresenter<NewTaskView> {
     private final TasksInteractor interactor;
 
-    private String titleText;
-    private String descriptionText;
+    private String titleText = "";
+    private String descriptionText = "";
 
 
     NewTaskPresenter(TasksInteractor interactor) {
@@ -28,7 +28,28 @@ final class NewTaskPresenter extends MvpPresenter<NewTaskView> {
 
 
     public void onCreateButtonClicked() {
+        if(titleText.isEmpty() || descriptionText.isEmpty()){
+            view.showError("Fill all fields");
+            return;
+        }
+        view.showProgress();
+
         view.showError("Your input:\n" + titleText + "\n" + descriptionText);
+
+        final Task task = new Task(titleText, descriptionText);
+        interactor.createTask(task, new Carry<Task>() {
+            @Override
+            public void onSuccess(Task result) {
+                view.hideActivity();
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.hideProgress();
+                view.showError(throwable.getMessage());
+
+            }
+        });
     }
 
     public void onTitleTextChanged(final String s) {

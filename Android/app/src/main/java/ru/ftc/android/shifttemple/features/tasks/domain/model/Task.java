@@ -8,12 +8,11 @@ public final class Task {
     private String description;
     private String date;
     private String status;
-    private long id_selected_bid;
+    private String id_selected_bid;
 
     private Boolean task_is_mine;
 
-    public Task(String user_id, String title, String description) {
-        this.user_id = user_id;
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
     }
@@ -49,7 +48,7 @@ public final class Task {
         return status;
     }
 
-    public long getIdSelectedBid() {
+    public String getIdSelectedBid() {
         return id_selected_bid;
     }
 

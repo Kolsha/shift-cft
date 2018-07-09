@@ -1,6 +1,5 @@
 package ru.ftc.android.shifttemple.features.tasks.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.ftc.android.shifttemple.features.books.domain.model.Success;
@@ -39,6 +38,16 @@ public final class TasksDataSourceImpl implements TasksDataSource {
     @Override
     public void getTaskBids(String id, Carry<List<Bid>> carry) {
         tasksApi.getTaskBids(id).enqueue(new DefaultCallback(carry));
+    }
+
+    @Override
+    public void finishTask(String id, Carry<Success> carry) {
+        tasksApi.finishTask(id).enqueue(new DefaultCallback(carry));
+    }
+
+    @Override
+    public void chooseTaskBid(String id, Bid bid, Carry<Success> carry) {
+        tasksApi.chooseTaskBid(id, bid).enqueue(new DefaultCallback(carry));
     }
 
     @Override

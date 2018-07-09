@@ -1,6 +1,5 @@
 package ru.ftc.android.shifttemple.features.tasks.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.ftc.android.shifttemple.features.books.domain.model.Success;
@@ -44,5 +43,15 @@ public final class TasksRepositoryImpl implements TasksRepository {
     @Override
     public void createTaskBid(String id, Bid bid, Carry<Bid> carry) {
         dataSource.createTaskBid(id, bid, carry);
+    }
+
+    @Override
+    public void finishTask(String id, Carry<Success> carry) {
+        dataSource.finishTask(id, carry);
+    }
+
+    @Override
+    public void chooseTaskBid(String id, Bid bid, Carry<Success> carry) {
+        dataSource.chooseTaskBid(id, bid, carry);
     }
 }

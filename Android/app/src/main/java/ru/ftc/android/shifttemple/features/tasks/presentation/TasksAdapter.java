@@ -1,6 +1,7 @@
 package ru.ftc.android.shifttemple.features.tasks.presentation;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,15 +59,19 @@ final class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> {
         TaskHolder(View view, SelectTaskListener selectTaskListener) {
             super(view);
             this.selectTaskListener = selectTaskListener;
-            taskTitleView       = view.findViewById(R.id.task_item_title);
+            taskTitleView = view.findViewById(R.id.task_item_title);
             taskDescriptionView = view.findViewById(R.id.task_item_description);
-            taskDateView        = view.findViewById(R.id.task_item_date);
+            taskDateView = view.findViewById(R.id.task_item_date);
         }
 
         void bind(final Task task) {
             taskTitleView.setText(task.getTitle());
             taskDescriptionView.setText(task.getShortDescription()); // TODO: constant define .substring(0, 100)
             taskDateView.setText(task.getDate());
+
+
+            ((View) taskTitleView.getParent())
+                    .setBackgroundColor((task.getTaskIsMine() != null && task.getTaskIsMine()) ? Color.GREEN : Color.WHITE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
